@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Products</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .content {
+            margin-top: 110px;
+            height: calc(100vh - 70px);
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1 / 0.8;
+        }
+
+        .product-info {
+            padding: 15px;
+            background-color: #f8f9fa;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .product-info p {
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #28a745;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .no-products-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .container-fluid {
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg position-fixed top-0 w-100 bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Biz Finder | Business</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-end">
+                    <li class="nav-item dropdown position-relative">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/images/blank-profile-picture-973460_1280.webp" alt="Dropdown" style="width: 30px; height: 30px; border-radius: 50%;">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/business/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/business">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/business/product">Products</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content" id="content">
+        <div class="container h-100 overflow-y-auto">
+            <% if(product.length > 0){ %>
+                <div class="row g-4">
+                    <% product.forEach((i) => { %>
+                        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                            <div class="product-card">
+                                <img src="<%= i.images[0] %>" class="product-image" alt="<%= i.product %>">
+                                <div class="product-info">
+                                    <p class="fw-bold text-capitalize"><%= i.product %></p>
+                                    <p class="product-price"><%= i.price %></p>
+                                    <p class="product-description"><%= i.description %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="no-products-message">
+                    <h4>No products added by store</h4>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

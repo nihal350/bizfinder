@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Cart</title>
+    <link rel="stylesheet" href="/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            text-transform: uppercase;
+        }
+
+        /* Navbar styles */
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content */
+        .content {
+            margin-top: 70px;
+            height: calc(100dvh - 70px);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quantity-btn {
+            padding: 5px 10px;
+            width: 20%;
+            border: 1px solid #ddd;
+            background: #f8f8f8;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 60%;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        .buy-now {
+            width: 100%;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .buy-now button {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            background-color: orange;
+            font-weight: 700;
+            color: white;
+        }
+
+        .item {
+            border: 1px solid gray;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        .summery-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Popup modal */
+        .popup {
+            width: 100%;
+            height: 100dvh;
+            background-color: rgba(255, 255, 255, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            z-index: 9999;
+        }
+
+        #closeButton {
+            display: inline-block;
+            color: black;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .top {
+            padding: 30px;
+            display: flex;
+            justify-content: end;
+        }
+
+        /* Button styles */
+        .btn-custom {
+            padding: 10px 20px;
+            border: none;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-custom-close {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('navbar')%>
+
+    <div class="content py-3" id="content">
+        <div class="container h-100">
+            <div class="row m-0 p-0 h-100">
+                <% if(products.cart.length> 0){ %>
+                <div class="col-12 col-md-5 order-md-2">
+                    <div class="summery p-3 fw-bold border">
+                        <div class="summery-item">
+                            <span>subtotal : </span>
+                            <span>₹ <%= total %></span>
+                        </div>
+                        <hr>
+                        <div class="summery-item">
+                            <span>shipping : </span>
+                            <span>₹ 20</span>
+                        </div>
+                        <hr>
+                        <div class="summery-item">
+                            <span>tax : </span>
+                            <span>₹ <%= tax %></span>
+                        </div>
+                        <hr>
+                        <div class="summery-item">
+                            <span>total : </span>
+                            <span>₹ <%= parseInt(total) + 20 + parseInt(tax) %></span>
+                        </div>
+                        <div class="checkout p-5">
+                            <button class="btn-custom" id="checkoutButton">Proceed to Checkout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-7 h-100 overflow-y-auto">
+                    <% products.cart.forEach((i)=>{ %>
+                    <div class="item">
+                        <div class="row m-0 p-0">
+                            <div class="col-2 p-0">
+                                <img style="width: 100%; height: 100%;" src="<%= i.images[0] %>" alt="">
+                            </div>
+                            <div class="col-7 m-0 py-0 px-3 d-flex flex-column align-items-start justify-content-center" style="gap: 5%;">
+                                <p class="fw-bold m-0 p-0">
+                                    <%= i.product %>
+                                </p>
+                                <p class="fw-bolder m-0 p-0">₹ <%= i.price %> x <%= i.quantity %>
+                                </p>
+                                <a href="/deleteitem/<%= i.id %>" class="m-0 p-0"><button class="btn btn-outline-danger">Remove Item</button></a>
+                            </div>
+                            <div class="col-3 d-flex align-items-center justify-content-center">
+                                <p class="fw-bold">₹ <%= i.total %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="popup" id="popup">
+        <div class="container">
+            <div class="top">
+                <i class="fa-solid fa-xmark" onclick="closeAddress()" id="closeButton"></i>
+            </div>
+            <div class="container-fluid">
+                <div class="row m-0">
+                    <div class="col-12 col-md-6 offset-md-3 py-2">
+                        <label for="address" class="form-label">Enter Address</label>
+                        <textarea class="form-control" name="address" id="address" placeholder="Enter address for delivery" rows="5" required></textarea>
+                    </div>
+                    <div class="col-12 col-md-6 offset-md-3 py-2 d-flex flex-column align-items-center justify-content-center" style="gap: 20px;">
+                        <button class="btn-custom" id="rzp-button">Buy Now</button>
+                        <button class="btn-custom btn-custom-close" onclick="closeAddress()" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="text" id="total" value="<%= parseInt(total) + 20 + parseInt(tax) %>" hidden>
+
+    <script src="https://kit.fontawesome.com/b59c1d1810.js" crossorigin="anonymous"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById('cart').classList.add('active')
+        var checkoutButton = document.getElementById('checkoutButton')
+        checkoutButton.addEventListener('click', () => {
+            document.getElementById('popup').style.display = 'block'
+        })
+
+        function closeAddress() {
+            document.getElementById('popup').style.display = 'none'
+        }
+
+        const rpbutton = document.getElementById('rzp-button')
+
+        rpbutton.addEventListener('click', async (event) => {
+            let total = document.getElementById('total').value
+            let address = document.getElementById('address').value
+
+            if (address) {
+                const response = await fetch('/payment', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ total, address })
+                })
+
+                const responsee = await response.json()
+                const { order } = responsee
+
+                var options = {
+                    key: "rzp_test_RHzlxdFARhO6xk",
+                    amount: responsee.amount,
+                    currency: "INR",
+                    name: responsee.useremail,
+                    description: "",
+                    order_id: order.id,
+                    handler: async function (response) {
+                        fetch('/verifypayment', {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ paymentId: response.razorpay_payment_id, orderId: response.razorpay_order_id, signature: response.razorpay_signature, id: responsee.useremail, address: responsee.address })
+                        }).then((r) => r.json()).then((d) => {
+                            if (d.success) {
+                                location.replace(`${window.location.origin}/success`)
+                            }
+                        })
+                    },
+                    prefill: {
+                        name: responsee.useremail,
+                        email: responsee.useremail,
+                    },
+                    notes: {
+                        address: ""
+                    },
+                    theme: {
+                        color: "#000"
+                    }
+                };
+
+                var rzp1 = new Razorpay(options);
+                rzp1.open()
+            } else {
+                document.getElementById('address').style.border = '1px solid red'
+            }
+        })
+    </script>
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

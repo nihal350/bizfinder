@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .login {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f4f6f9;
+        }
+
+        .login-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            color: white;
+            font-weight: 700;
+            background-color: #28a745;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #218838;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .error-message {
+            width: 100%;
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        fieldset {
+            border: none;
+        }
+
+        legend {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+        <div class="login-container">
+            <form action="/admin/login" method="POST">
+                <fieldset>
+                    <legend>Admin Login</legend>
+                    <div class="row m-0 p-0">
+                        <div class="col-12 py-2">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email ID" required>
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
+                        </div>
+                        <div class="col-12 p-2">
+                            <p class="error-message" id="error"><%= error %></p>
+                        </div>
+                        <div class="col-12 py-2">
+                            <button type="submit" class="login-button">Login</button>
+                        </div>
+                        <div class="col-12 py-2 footer-links">
+                            <a href="/admin/signup">Don't have an account? Signup now</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        setTimeout(()=>{
+            document.getElementById('error').innerHTML=null
+        })
+    </script>
+</body>
+
+</html>

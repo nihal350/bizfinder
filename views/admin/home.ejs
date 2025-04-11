@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .create-button {
+            padding: 12px 40px;
+            background-color: #28a745;
+            color: white;
+            font-weight: 700;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-button:hover {
+            background-color: #218838;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        select {
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        select:disabled {
+            background-color: #f1f1f1;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('navbar')%>
+
+    <div class="content" id="content">
+        <div class="container h-100 d-flex align-items-center justify-content-center flex-column" style="gap: 20px;">
+            <div class="form-container">
+                <form action="/admin/createcategory" method="POST">
+                    <fieldset>
+                        <legend class="text-center">Create Category</legend>
+                        <div class="row">
+                            <div class="col-12 py-2">
+                                <label for="category" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" name="category" id="category" placeholder="Enter category name" required>
+                            </div>
+                            <div class="col-12 p-2">
+                                <p class="message error-message" id="error"><%= error %></p>
+                                <p class="message success-message"><%= msg %></p>
+                            </div>
+                            <div class="col-12 py-2 d-flex align-items-center justify-content-center">
+                                <button type="submit" class="create-button">Create Category</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <% if(category.length > 0){ %>
+                    <select>
+                        <option value="" selected>Created Categories</option>
+                        <% category.forEach((i) => { %>
+                            <option value=""><%= i.category %></option>
+                        <% }) %>
+                    </select>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('home').classList.add('active')
+        setTimeout(()=>{
+            document.getElementById('error').innerHTML=null
+        }, 2000)
+    </script>
+</body>
+
+</html>

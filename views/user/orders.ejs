@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Orders</title>
+    <link rel="stylesheet" href="/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            text-transform: uppercase;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 20px 0;
+            height: calc(100dvh - 70px);
+            overflow-y: auto;
+        }
+
+        .content .container {
+            max-width: 960px;
+        }
+
+        .fw-bold {
+            font-weight: 700;
+        }
+
+        .item-img {
+            width: 100%;
+            aspect-ratio: 1;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+
+        .order-item {
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .order-item p {
+            margin-bottom: 8px;
+        }
+
+        .order-item hr {
+            border-top: 1px solid #ddd;
+        }
+
+        .order-item .product-info {
+            margin-bottom: 15px;
+        }
+
+        .order-item .product-info p {
+            font-size: 16px;
+        }
+
+        .order-item .product-info p span {
+            font-weight: bold;
+        }
+
+        .order-item .fw-bold {
+            margin-top: 10px;
+        }
+
+        .order-item .product-details {
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .order-item .product-details hr {
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('navbar')%>
+
+    <div class="content" id="content">
+        <div class="container">
+            <div class="row m-0">
+                <div class="col-12 py-3">
+                    <h2 class="fw-bold">Previous Orders</h2>
+                </div>
+                
+                <hr>
+                <% orders.forEach((i)=>{ %>
+                    <div class="col-12">
+                        <div class="order-item">
+                            <p><span class="fw-bold">Bill ID:</span> <%= i.billid %></p>
+                            <p><span class="fw-bold">Payment ID:</span> <%= i.paymentid %></p>
+                            <p><span class="fw-bold">Address:</span> <%= i.address %></p>
+                            <div class="product-info">
+                                <p class="fw-bold">Products:</p>
+                                <hr>
+                                <% i.cart.forEach((j)=>{ %>
+                                    <p><span>From:</span> <%= j.storeName %></p>
+                                    <p><span>Product:</span> <%= j.product %></p>
+                                    <p><span>Price:</span> ₹ <%= j.price %></p>
+                                    <p><span>Quantity:</span> <%= j.quantity %></p>
+                                    <hr style="width: 200px;">
+                                <% }) %>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+         document.getElementById('orders').classList.add('active')
+    </script>
+</body>
+
+</html>

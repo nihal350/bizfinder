@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Approve Business</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin-top: 90px;
+            padding: 30px 0;
+        }
+
+        .business-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .business-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            max-width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .business-details {
+            flex: 1;
+            min-width: 280px;
+            padding: 0 15px;
+        }
+
+        .business-details h4 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .business-details p {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .approve-btn {
+            padding: 10px 30px;
+            background-color: #28a745;
+            color: white;
+            font-weight: 700;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .approve-btn:hover {
+            background-color: #218838;
+        }
+
+        .no-business-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .business-item {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .approve-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%-include('navbar')%>
+
+    <div class="content" id="content">
+        <div class="container">
+            <% if(business.length > 0){ %>
+                <div class="row">
+                    <% business.forEach((i) => { %>
+                        <div class="col-12 col-md-6">
+                            <div class="business-item">
+                                <div class="col-12 col-md-4">
+                                    <img src="<%= i.image %>" alt="Business Image">
+                                </div>
+                                <div class="business-details col-12 col-md-7">
+                                    <h4><%= i.storeName %></h4>
+                                    <p><strong>Description:</strong> <%= i.storeDescription %></p>
+                                    <p><strong>Store ID:</strong> <%= i.id %></p>
+                                    <p><strong>Email:</strong> <%= i.email %></p>
+                                    <p><strong>Status:</strong> <%= i.status %></p>
+                                    <p><strong>Location:</strong> <%= i.location %></p>
+                                    <p><strong>District:</strong> <%= i.district %></p>
+                                    <p><strong>Pincode:</strong> <%= i.pincode %></p>
+                                </div>
+                                <div class="col-12 col-md-3 d-flex align-items-center justify-content-center">
+                                    <a href="/admin/approvebusiness/<%= i.id %>">
+                                        <button class="approve-btn">Approve Store</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="no-business-message">
+                    <h4>No business to approve</h4>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('approve').classList.add('active')
+    </script>
+</body>
+
+</html>

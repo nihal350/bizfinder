@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Store</title>
+    <link rel="stylesheet" href="/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            text-transform: uppercase;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin-top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            padding-bottom: 30px;
+        }
+
+        .business-info h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .business-info p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .product-card {
+            margin-bottom: 30px;
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .product-card .product-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .product-card .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e67e22;
+            background-color: #fff;
+            color: #e67e22;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: #e67e22;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .quantity-btn:active {
+            background-color: #d35400;
+            transform: scale(0.95);
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 2px solid #ddd;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #555;
+            margin: 0 10px;
+        }
+
+        .buy-now button {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            background-color: #e67e22;
+            font-weight: 700;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .buy-now button:hover {
+            background-color: #d35400;
+        }
+
+        .card-footer {
+            background: #f8f8f8;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('navbar')%>
+
+        <div class="content" id="content">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12 col-md-3">
+                        <img src="<%= business.image %>" class="img-fluid rounded" alt="">
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <div class="business-info">
+                            <h3>
+                                <%= business.storeName %>
+                            </h3>
+                            <p>
+                                <%= business.storeDescription %>
+                            </p>
+                            <p class="m-0">
+                                <%= business.location %>
+                            </p>
+                            <p class="m-0">
+                                <%= business.district %>
+                            </p>
+                            <p class="m-0">Pin : <%= business.pincode %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <% product.forEach((i)=> { %>
+                        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                            <div class="product-card">
+                                <a href="/selectedproduct/<%= i.storeName %>/<%= i.id %>">
+                                    <img src="<%= i.images[0] %>" alt="" class="img-fluid rounded mb-2">
+                                </a>
+                                <div class="card-footer">
+                                    <p class="product-name text-center">
+                                        <%= i.product %>
+                                    </p>
+                                    <p class="product-price text-center">₹ <%= i.price %>
+                                    </p>
+                                </div>
+                                <form action="/addtocart/<%= i.id %>" method="POST">
+                                    <div class="quantity-control mb-3">
+                                        <button class="quantity-btn minus" type="button">-</button>
+                                        <input type="number" class="quantity-input" min="1" max="<%= i.quantity %>" id="quantity" name="quantity">
+                                        <button class="quantity-btn plus" type="button">+</button>
+                                    </div>
+                                    <div class="buy-now">
+                                        <button type="submit">Add to Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.getElementById('home').classList.add('active')
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                if (!input.value) {
+                    input.value = 1; // Set initial value to 1 if it's empty
+                }
+            });
+
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const input = button.parentElement.querySelector('.quantity-input');
+                    let value = parseInt(input.value);
+                    if (button.classList.contains('plus')) {
+                        value++;
+                    } else {
+                        value = value > 1 ? value - 1 : 1;
+                    }
+
+                    input.value = value;
+                });
+            });
+        </script>
+</body>
+
+</html>

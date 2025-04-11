@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home</title>
+    <link rel="stylesheet" href="/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            text-transform: uppercase;
+        }
+
+        /* Navbar styling */
+        nav {
+            background: aliceblue;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content Styling */
+        .content {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        /* Item card styling */
+        .item-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            margin-bottom: 1rem;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .item-name {
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Text styling for center alignment */
+        #text {
+            border: none;
+            border-left: 1px solid gray;
+            border-right: 1px solid gray;
+            border-bottom: 1px solid gray;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        /* Responsive grid */
+        .row {
+            margin: 0;
+        }
+
+        .product-images img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 576px) {
+            .col-sm-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .col-md-4 {
+                flex: 0 0 33.3333%;
+                max-width: 33.3333%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .col-xl-2 {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('navbar')%>
+
+    <div class="content" id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-images" id="items">
+                        <% product.forEach((i) => { %>
+                            <div class="img">
+                                <a href="/selectstore/<%= i.storeName %>"><img src="<%= i.images[0] %>" alt="Product Image"></a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container">
+            <div class="row g-3">
+                <% business.forEach((i) => { %>
+                    <div class="col-12 col-sm-6 col-md-4 col-xl-2">
+                        <div class="item-card">
+                            <a href="/selectstore/<%= i.storeName %>">
+                                <img src="<%= i.image %>" class="item-img" alt="<%= i.storeName %>">
+                            </a>
+                            <p class="item-name">
+                                <%= i.storeName %>
+                            </p>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/slick-carousel/slick/slick.min.js"></script>
+    <script>
+        document.getElementById('home').classList.add('active')
+
+        $(document).ready(function () {
+            $('#items').slick({
+                arrows: true,
+                draggable: true,
+                slidesToScroll: 1,
+                slidesToShow: 2,
+                autoplay: true,
+                autoplaySpeed: 2000, // slower autoplay speed
+            });
+        });
+    </script>
+</body>
+
+</html>

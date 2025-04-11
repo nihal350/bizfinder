@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Login</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        .login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Take full viewport height */
+        }
+
+        .login-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Limit the width of the form */
+        }
+
+        .login-button {
+            border: none;
+            padding: 10px;
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            background-color: green;
+            border-radius: 5px;
+        }
+
+        .login-button:hover {
+            background-color: #45a049;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .form-control:focus {
+            border-color: green;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .link a {
+            color: green;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .login-form {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+        <form action="/business/login" method="POST" class="login-form">
+            <fieldset class="border-0">
+                <legend class="text-center mb-4" style="font-size: 1.5rem; font-weight: 600;">Business Login</legend>
+                <div class="row">
+                    <div class="col-12 py-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="col-12 py-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="col-12 py-2">
+                        <p class="error-message" id="error"><%= error %></p>
+                    </div>
+                    <div class="col-12 py-2">
+                        <button class="login-button">Login</button>
+                    </div>
+                    <div class="col-12 py-2 link">
+                        <a href="/business/signup">Don't have an account? Sign up now</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+         setTimeout(()=>{
+            document.getElementById('error').innerHTML=null
+        }, 2000)
+    </script>
+</body>
+
+</html>
